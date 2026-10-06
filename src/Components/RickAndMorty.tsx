@@ -1,23 +1,28 @@
 import styled from "styled-components";
 import type {Character} from "../interfaces/Character.ts";
+import spaceImage from "./outer-space-background.jpg";
 
-const AllCharsDiv = styled.div`
+const AllFields = styled.div`
     display: flex;
     flex-direction: column;
     padding: 20px;
-    background-color: navy;
+    background-color: midnightblue;
 `;
 
-const SingleCharDiv = styled.div<{ status: string }>`
+const SingleField = styled.div<{ status: string }>`
     display: flex;
     align-items: center;
     padding: 20px;
     margin: 10px 0;
-    background-color: aliceblue;
-    color: black;
     border: 2px solid steelblue;
     font-family: Arial, sans-serif;
     text-align: left;
+    background-color: gray;
+    background-image: url(${spaceImage});
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: black;
 
     img {
         width: 150px;
@@ -34,6 +39,13 @@ const SingleCharDiv = styled.div<{ status: string }>`
         font-size: 16px;
         margin: 8px 0;
     }
+    
+    .character-info {
+        background-color: rgba(255, 255, 255, 0.5);
+        padding: 15px;
+        border-radius: 10px;
+        width: 100%;
+    }
 
     @media (max-width: 600px) {
         flex-direction: column;
@@ -47,13 +59,13 @@ const SingleCharDiv = styled.div<{ status: string }>`
 `;
 export default function RickAndMorty(props : { data:Character[] } ){
     return (
-        <AllCharsDiv >
+        <AllFields>
             {
                 props.data.map((char: Character) =>
-                    <SingleCharDiv key={char.id} status={char.status}>
+                    <SingleField key={char.id} status={char.status}>
                         <img src={char.image} alt={char.name} />
 
-                        <div>
+                        <div className={"character-info"}>
                             <h2>{char.name}</h2>
                             <p><strong>Status:</strong> {char.status}</p>
                             <p><strong>Species:</strong> {char.species}</p>
@@ -61,9 +73,9 @@ export default function RickAndMorty(props : { data:Character[] } ){
                             <p><strong>Origin:</strong> {char.origin.name}</p>
                             <p><strong>Location:</strong> {char.location.name}</p>
                         </div>
-                    </SingleCharDiv>
+                    </SingleField>
                 )
             }
-        </AllCharsDiv>
+        </AllFields>
     );
 }

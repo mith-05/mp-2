@@ -3,32 +3,30 @@ import styled from "styled-components";
 import {useEffect, useState} from "react";
 import type {Character} from "./interfaces/Character.ts";
 
-const ParentDiv=styled.div`
-  width: 80vw;
+const OuterDes=styled.div`
   margin: auto;
+  width: 90vw;
   border: 50px black dashed;
 `;
 
 export default function App(){
 
-  // useState Hook to store Data.
-  const [data, setData] = useState<Character[]>([]);
+  const [item, setData] = useState<Character[]>([]);
 
-  // useEffect Hook for error handling and re-rendering.
   useEffect(() => {
     async function fetchData(): Promise<void> {
-      const rawData = await fetch("https://rickandmortyapi.com/api/character");
-      const {results} : {results: Character[]} = await rawData.json();
+      const raw = await fetch("https://rickandmortyapi.com/api/character");
+      const {results} : {results: Character[]} = await raw.json();
       setData(results);
     }
     fetchData()
-        .then(() => console.log("Data fetched successfully"))
-        .catch((e: Error) => console.log("There was the error: " + e));
-  }, [data.length]);
+        .then(() => console.log("Everything is good"))
+        .catch((e: Error) => console.log("This error: " + e + "occurred"));
+  }, [item.length]);
 
   return(
-      <ParentDiv>
-        <RickAndMorty data={data}/>
-      </ParentDiv>
+      <OuterDes>
+        <RickAndMorty data={item}/>
+      </OuterDes>
   )
 }
